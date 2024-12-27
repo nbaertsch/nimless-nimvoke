@@ -1,22 +1,17 @@
-import utils/[getmoduleh, getprocaddr, stack, str]
+import utils/[getmoduleh, getProcAddressByHash, stack, str, hash]
 import winim
+from dinvoke import dinvokeDefine
 
 # declaring WinExec
-type  WinExec = (proc(lpCmdLine: LPCSTR, uCmdShow: UINT): int32 {.stdcall.})
+#type  WinExec = (proc(lpCmdLine: LPCSTR, uCmdShow: UINT): int32 {.stdcall.})
 
 proc main() =
-  var sKernel32 {.stackStringA.} = "Kernel32.dll"
+    var sCalcExe {.stackStringA.} = "calc.exe"
 
-  var sWinExec {.stackStringA.} = "WinExec"
+    dinvokeDefine(WinExec, "Kernel32.dll", proc(lpCmdLine: LPCSTR, uCmdShow: UINT): int32 {.stdcall.})
 
-  var sCalcExe {.stackStringA.} = "calc.exe"
-
-  var
-    h: HMODULE = getModuleHandle(cast[cstring](addr sKernel32[0]))
-    pWinExec: WinExec = cast[WinExec](getProcAddress(h, cast[cstring](addr sWinExec[0])))
-
-  discard pWinExec(cast[LPCSTR](addr sCalcExe[0]), cast[UINT](0))
+    discard WinExec(cast[LPCSTR](addr sCalcExe[0]), cast[UINT](0))
 
 when isMainModule:
-  allignStack()
-  main()
+    allignStack()
+    main()
