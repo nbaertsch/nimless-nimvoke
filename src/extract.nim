@@ -119,6 +119,10 @@ proc extract_text(filename: string): seq[byte] =
     return @[]
 
 proc main() =
+    if paramCount() < 2:
+        echo red("Usage: extract.exe <filename> <shellcode_output_file>")
+        return
+
     var fileName = paramStr(1)
     var shellcodeFile = paramStr(2)
     var shellcode = extract_text(fileName)
