@@ -6,6 +6,7 @@ This is a template for writing shellcode that makes syscalls. It's based on my n
   - builds the shellcode.nim file.
   - builds extract.nim
   - runs extract.exe which carves out the shellcode from the .text section of shellcode.exe, writes the bytes to shellcode.bin, and prints shellcode as a nim byte array to stdout
+
 `nimble test`:
   - builds a simple test binary that simply slurps the shellcode.bin and self-injects it.
 
