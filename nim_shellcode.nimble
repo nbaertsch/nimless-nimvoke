@@ -15,6 +15,9 @@ requires "termstyle >= 0.1.0"
 
 # Tasks
 task shellcode, "Build the shellcode":
+    rmDir "cache"
+    rmDir "bin"
+    mkDir "bin"
     exec "nim c -o:bin/shellcode.exe src/shellcode.nim"
     exec "nim c -r -o:bin/extract.exe src/extract.nim bin/shellcode.exe bin/shellcode.bin"
 

@@ -29,7 +29,7 @@ type
         Ldr*: PPEB_LDR_DATA
         ProcessParameters*: PRTL_USER_PROCESS_PARAMETERS
         SubSystemData*: PVOID
-        ProcessHeap*: PVOID
+        ProcessHeap*: HANDLE
         FastPebLock*: PRTL_CRITICAL_SECTION
         AtlThunkSListPtr*: PSLIST_HEADER
         IFEOKey*: PVOID

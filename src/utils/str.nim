@@ -58,3 +58,9 @@ macro stackStringW*(sect) =
     varSect = newNimNode(nnkVarSection).add(identDef)
   result.add(varSect)
   result.assignChars(def[0], def[2].strVal, true)
+
+template CPTR*(a: untyped): cstring =
+  cast[cstring](a[0].addr)
+
+template CWPTR*(a: untyped): ptr uint16 = 
+  cast[ptr uint16](a[0].addr)
