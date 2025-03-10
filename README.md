@@ -1,5 +1,5 @@
 # Nimless Nimvoke
-This is a template for writing shellcode that makes syscalls. It's based on my nimvoke project, but this compiles to PIC shellcode thanks to previous [work](https://github.com/m4ul3r/writing_nimless) by [m4ul3r](https://github.com/m4ul3r).
+This is a template for writing syscall-capable shellcode in nim. It's based on my nimvoke project, but this compiles to PIC shellcode thanks to previous [work](https://github.com/m4ul3r/writing_nimless) by [m4ul3r](https://github.com/m4ul3r).
 
 ## What?
 `shellcode.nim` is a template for writing shellcode that makes syscalls. The provided example is a simple `NtRaiseHardError` message box.
@@ -37,4 +37,4 @@ var status = ninst.syscall("NtRaiseHardError", # Name of syscall, which will be 
     )
 ```
 
-Since this shellcode won't return cleanly (pull requests welcome), you'll need to call `ninst.pExitProcess(0)` at then end of your `shellcode.nim` to exit the process cleanly.
+Since this shellcode won't return cleanly (pull requests welcome), you'll need to call `ninst.pExitProcess(0)` at then end of your `shellcode.nim` to exit the process
