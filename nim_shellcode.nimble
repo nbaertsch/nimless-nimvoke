@@ -16,10 +16,12 @@ requires "termstyle >= 0.1.0"
 # Tasks
 task shellcode, "Build the shellcode":
     rmDir "cache"
-    rmDir "bin"
-    mkDir "bin"
-    exec "nim c -o:bin/shellcode.exe src/shellcode.nim"
-    exec "nim c -r -o:bin/extract.exe src/extract.nim bin/shellcode.exe bin/shellcode.bin"
+    for file in listFiles("bin"):
+        rmFile file
+    exec "nim c -o:bin/shellcode.exe -d:mingw src/shellcode.nim"
+    exec "nim c -o:bin/extract.exe src/extract.nim"
+    exec "./bin/extract.exe bin/shellcode.exe bin/shellcode.bin"
 
 task test, "Test the shellcode":
-    exec "nim c -r -o:bin/test.exe src/test.nim"
+    exec "nim c -o:bin/test.exe -d:mingw ./src/test.nim"
+    exec "./bin/test.exe"

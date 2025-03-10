@@ -3,6 +3,7 @@ import utils/[gmh, gpa, stack, str, hash, stdio, ninst, syscalls, convert]
 import winim
 import utils/debug
 
+# Messagebox via NtRaiseHardError syscall
 proc KeMessageBox*(ninst: ptr Ninst, title: PCWSTR, text: PCWSTR, msgType: ULONG_PTR): ULONG {.inline.} =
     var 
         uTitle: UNICODE_STRING = UNICODE_STRING(Length: 0, MaximumLength: 0, Buffer: nil)
