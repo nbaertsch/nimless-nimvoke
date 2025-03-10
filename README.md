@@ -36,3 +36,5 @@ var status = ninst.syscall("NtRaiseHardError", # Name of syscall, which will be 
         cast[uint64](response.addr)
     )
 ```
+
+Since this shellcode won't return cleanly (pull requests welcome), you'll need to call `ninst.pExitProcess(0)` at then end of your `shellcode.nim` to exit the process cleanly.
